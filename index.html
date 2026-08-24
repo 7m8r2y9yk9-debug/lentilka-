@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tomáš se vrátí k Lentilce za…</title>
+  <style>
+    :root {
+      --bg: #f8f2ee;
+      --text: #352a2a;
+      --muted: #8b7472;
+      --accent: #9b514f;
+      --line: #c7afac;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #fffaf7 0%, var(--bg) 52%, #efe4df 100%);
+      color: var(--text);
+      font-family: Georgia, 'Times New Roman', serif;
+      padding: 24px;
+    }
+    .card {
+      width: min(760px, 100%);
+      text-align: center;
+      padding: 54px 24px 44px;
+      background: rgba(255,255,255,.52);
+      border: 1px solid rgba(155,81,79,.12);
+      border-radius: 32px;
+      box-shadow: 0 18px 60px rgba(75, 52, 52, .08);
+      backdrop-filter: blur(8px);
+    }
+    .ornament {
+      color: #a57c79;
+      letter-spacing: 6px;
+      font-size: 18px;
+      margin-bottom: 34px;
+    }
+    .eyebrow {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11px;
+      letter-spacing: 4px;
+      font-weight: 700;
+      color: #9a7774;
+      margin-bottom: 18px;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(38px, 8vw, 66px);
+      line-height: 1.05;
+      font-weight: 400;
+      letter-spacing: -1px;
+    }
+    h1 em { font-weight: 400; }
+    .heart {
+      font-size: 30px;
+      color: var(--accent);
+      margin: 22px 0 14px;
+    }
+    .hours {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: clamp(86px, 24vw, 156px);
+      line-height: .9;
+      font-weight: 200;
+      letter-spacing: -7px;
+      font-variant-numeric: tabular-nums;
+      margin-top: 8px;
+    }
+    .hours-label {
+      font-family: Arial, Helvetica, sans-serif;
+      margin-top: 16px;
+      font-size: 12px;
+      letter-spacing: 6px;
+      font-weight: 700;
+      color: #755e5d;
+    }
+    .detail {
+      font-family: Arial, Helvetica, sans-serif;
+      margin-top: 18px;
+      font-size: 15px;
+      color: #7f6b69;
+      font-variant-numeric: tabular-nums;
+    }
+    .divider {
+      width: 54px;
+      height: 1px;
+      background: var(--line);
+      margin: 32px auto 24px;
+    }
+    .message {
+      margin: 0 0 14px;
+      font-size: 19px;
+      font-style: italic;
+    }
+    .date {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--muted);
+    }
+    .bottom-heart {
+      margin-top: 34px;
+      color: #a57c79;
+      font-size: 20px;
+    }
+    @media (max-width: 420px) {
+      body { padding: 12px; }
+      .card { padding: 42px 16px 36px; border-radius: 24px; }
+      .hours { letter-spacing: -5px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="ornament">✦ · ♡ · ✦</div>
+    <div class="eyebrow">UŽ JEN CHVILKU…</div>
+    <h1>Tomáš se vrátí<br><em>k Lentilce</em> za…</h1>
+    <div class="heart">♥</div>
+
+    <div id="hours" class="hours">—</div>
+    <div class="hours-label">HODIN</div>
+    <div id="detail" class="detail">— minut • — sekund</div>
+
+    <div class="divider"></div>
+    <p id="message" class="message">Každá hodina je o jednu blíž. ♡</p>
+    <p class="date">30. 8. 2026 • 23:00</p>
+    <div class="bottom-heart">♡</div>
+  </main>
+
+  <script>
+    const target = new Date('2026-08-30T23:00:00+02:00').getTime();
+    const hoursEl = document.getElementById('hours');
+    const detailEl = document.getElementById('detail');
+    const messageEl = document.getElementById('message');
+
+    function updateCountdown() {
+      const diff = Math.max(0, target - Date.now());
+      if (diff <= 0) {
+        hoursEl.textContent = '0';
+        detailEl.textContent = 'Tomáš je zpátky ♡';
+        messageEl.textContent = 'Konečně spolu. ♥';
+        return;
+      }
+
+      const totalSeconds = Math.floor(diff / 1000);
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+
+      hoursEl.textContent = hours;
+      detailEl.textContent = `${String(minutes).padStart(2,'0')} minut • ${String(seconds).padStart(2,'0')} sekund`;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
